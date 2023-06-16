@@ -1,6 +1,6 @@
 import { SectionAccessesService } from './section-accesses.service';
 import { Component, Inject, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import { filter, map, mergeMap, take } from 'rxjs/operators';
 import { combineLatest, Observable, of, Subscription } from 'rxjs';
@@ -44,7 +44,7 @@ import { hasValue, isNotEmpty, isNotNull } from '../../../shared/empty.util';
 import {
   WorkspaceitemSectionAccessesObject
 } from '../../../core/submission/models/workspaceitem-section-accesses.model';
-import { SubmissionAccessesConfigService } from '../../../core/config/submission-accesses-config.service';
+import { SubmissionAccessesConfigDataService } from '../../../core/config/submission-accesses-config-data.service';
 import { getFirstSucceededRemoteData } from '../../../core/shared/operators';
 import { FormComponent } from '../../../shared/form/form.component';
 import { FormService } from '../../../shared/form/form.service';
@@ -125,7 +125,7 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
    * @param {SectionFormOperationsService} formOperationsService
    * @param {FormBuilderService} formBuilderService
    * @param {TranslateService} translate
-   * @param {SubmissionAccessesConfigService} accessesConfigService
+   * @param {SubmissionAccessesConfigDataService} accessesConfigService
    * @param {SectionAccessesService} accessesService
    * @param {SubmissionJsonPatchOperationsService} operationsService
    * @param {string} injectedSubmissionId
@@ -133,7 +133,7 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
   constructor(
     protected sectionService: SectionsService,
     private formBuilderService: FormBuilderService,
-    private accessesConfigService: SubmissionAccessesConfigService,
+    private accessesConfigService: SubmissionAccessesConfigDataService,
     private accessesService: SectionAccessesService,
     protected formOperationsService: SectionFormOperationsService,
     protected operationsBuilder: JsonPatchOperationsBuilder,
@@ -186,8 +186,8 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
       if (event.model.id === FORM_ACCESS_CONDITION_TYPE_CONFIG.id) {
         // Clear previous state when switching through different access conditions
 
-        const startDateControl: FormControl = event.control.parent.get('startDate') as FormControl;
-        const endDateControl: FormControl = event.control.parent.get('endDate') as FormControl;
+        const startDateControl: UntypedFormControl = event.control.parent.get('startDate') as UntypedFormControl;
+        const endDateControl: UntypedFormControl = event.control.parent.get('endDate') as UntypedFormControl;
 
         startDateControl?.markAsUntouched();
         endDateControl?.markAsUntouched();

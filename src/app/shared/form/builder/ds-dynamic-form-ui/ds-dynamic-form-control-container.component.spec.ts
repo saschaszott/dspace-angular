@@ -1,6 +1,6 @@
 import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, NgZone, SimpleChange } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { By } from '@angular/platform-browser';
 
@@ -66,7 +66,7 @@ import { DsDynamicFormGroupComponent } from './models/form-group/dynamic-form-gr
 import { DsDynamicRelationGroupComponent } from './models/relation-group/dynamic-relation-group.components';
 import { DsDatePickerInlineComponent } from './models/date-picker-inline/dynamic-date-picker-inline.component';
 import { DsDynamicTypeBindRelationService } from './ds-dynamic-type-bind-relation.service';
-import { RelationshipService } from '../../../../core/data/relationship.service';
+import { RelationshipDataService } from '../../../../core/data/relationship-data.service';
 import { SelectableListService } from '../../../object-list/selectable-list/selectable-list.service';
 import { ItemDataService } from '../../../../core/data/item-data.service';
 import { Store } from '@ngrx/store';
@@ -79,6 +79,8 @@ import { FormService } from '../../form.service';
 import { SubmissionService } from '../../../../submission/submission.service';
 import { FormBuilderService } from '../form-builder.service';
 import { NgxMaskModule } from 'ngx-mask';
+import { APP_CONFIG } from '../../../../../config/app-config.interface';
+import { environment } from '../../../../../environments/environment';
 
 function getMockDsDynamicTypeBindRelationService(): DsDynamicTypeBindRelationService {
   return jasmine.createSpyObj('DsDynamicTypeBindRelationService', {
@@ -145,12 +147,14 @@ describe('DsDynamicFormControlContainerComponent test suite', () => {
     new DynamicListCheckboxGroupModel({
       id: 'checkboxList',
       vocabularyOptions: vocabularyOptions,
-      repeatable: true
+      repeatable: true,
+      required: false,
     }),
     new DynamicListRadioGroupModel({
       id: 'radioList',
       vocabularyOptions: vocabularyOptions,
-      repeatable: false
+      repeatable: false,
+      required: false,
     }),
     new DynamicRelationGroupModel({
       submissionId: '1234',
@@ -183,7 +187,7 @@ describe('DsDynamicFormControlContainerComponent test suite', () => {
     new DynamicQualdropModel({ id: 'combobox', readOnly: false, required: false })
   ];
   const testModel = formModel[8];
-  let formGroup: FormGroup;
+  let formGroup: UntypedFormGroup;
   let fixture: ComponentFixture<DsDynamicFormControlContainerComponent>;
   let component: DsDynamicFormControlContainerComponent;
   let debugElement: DebugElement;
@@ -215,11 +219,11 @@ describe('DsDynamicFormControlContainerComponent test suite', () => {
         DsDynamicFormControlContainerComponent,
         DynamicFormService,
         { provide: DsDynamicTypeBindRelationService, useValue: getMockDsDynamicTypeBindRelationService() },
-        { provide: RelationshipService, useValue: {} },
+        { provide: RelationshipDataService, useValue: {} },
         { provide: SelectableListService, useValue: {} },
         { provide: ItemDataService, useValue: {} },
         { provide: Store, useValue: {} },
-        { provide: RelationshipService, useValue: {} },
+        { provide: RelationshipDataService, useValue: {} },
         { provide: SelectableListService, useValue: {} },
         { provide: FormService, useValue: {} },
         { provide: FormBuilderService, useValue: {} },
@@ -230,7 +234,8 @@ describe('DsDynamicFormControlContainerComponent test suite', () => {
             findById: () => observableOf(createSuccessfulRemoteDataObject(testWSI))
           }
         },
-        { provide: NgZone, useValue: new NgZone({}) }
+        { provide: NgZone, useValue: new NgZone({}) },
+        { provide: APP_CONFIG, useValue: environment }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents().then(() => {
@@ -265,8 +270,8 @@ describe('DsDynamicFormControlContainerComponent test suite', () => {
 
   it('should initialize correctly', () => {
     expect(component.context).toBeNull();
-    expect(component.control instanceof FormControl).toBe(true);
-    expect(component.group instanceof FormGroup).toBe(true);
+    expect(component.control instanceof UntypedFormControl).toBe(true);
+    expect(component.group instanceof UntypedFormGroup).toBe(true);
     expect(component.model instanceof DynamicFormControlModel).toBe(true);
     expect(component.hasErrorMessaging).toBe(false);
 
