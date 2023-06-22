@@ -4730,23 +4730,23 @@
 
   "event.listelement.badge" : "Event",
 
-  "event.listelement.titleprefix" : "Event:",
+  "event.page.titleprefix" : "Event:",
 
   "dataset.listelement.badge" : "Dataset",
 
-  "dataset.listelement.titleprefix" : "Dataset:",
+  "dataset.page.titleprefix" : "Dataset:",
 
   "equipment.listelement.badge": "Equipment",
 
-  "equipment.listelement.titleprefix": "Equipment:",
+  "equipment.page.titleprefix": "Equipment:",
 
   "patent.listelement.badge": "Patent",
 
-  "patent.listelement.titleprefix": "Patent:",
+  "patent.page.titleprefix": "Patent:",
 
   "product.listelement.badge": "Product",
 
-  "product.listelement.titleprefix": "Product:",
+  "product.page.titleprefix": "Product:",
   
 
 
