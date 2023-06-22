@@ -8089,32 +8089,32 @@
   // "event.listelement.badge" : "Event",
   "event.listelement.badge" : "Veranstaltung",
 
-  // "event.listelement.titleprefix" : "Event:",
-  "event.listelement.titleprefix" : "Veranstaltung:",
+  // "event.page.titleprefix" : "Event:",
+  "event.page.titleprefix" : "Veranstaltung:",
 
   // "dataset.listelement.badge" : "Dataset",
   "dataset.listelement.badge" : "Datensatz",
 
-  // "dataset.listelement.titleprefix" : "Dataset:",
-  "dataset.listelement.titleprefix" : "Datensatz:",
+  // "dataset.page.titleprefix" : "Dataset:",
+  "dataset.page.titleprefix" : "Datensatz:",
 
   // "equipment.listelement.badge": "Equipment",
   "equipment.listelement.badge": "Ausstattung",
 
-  // "equipment.listelement.titleprefix": "Equipment:",
-  "equipment.listelement.titleprefix": "Ausstattung:",
+  // "equipment.page.titleprefix": "Equipment:",
+  "equipment.page.titleprefix": "Ausstattung:",
 
   // "patent.listelement.badge": "Patent",
   "patent.listelement.badge": "Patent",
 
-  // "patent.listelement.titleprefix": "Patent:",
-  "patent.listelement.titleprefix": "Patent:",
+  // "patent.page.titleprefix": "Patent:",
+  "patent.page.titleprefix": "Patent:",
 
   // "product.listelement.badge": "Product",
   "product.listelement.badge": "Produkt",
 
-  // "product.listelement.titleprefix": "Product:",
-  "product.listelement.titleprefix": "Produkt:",
+  // "product.page.titleprefix": "Product:",
+  "product.page.titleprefix": "Produkt:",
 
 
 
