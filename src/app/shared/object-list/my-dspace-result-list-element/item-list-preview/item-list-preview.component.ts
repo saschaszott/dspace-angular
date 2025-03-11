@@ -1,25 +1,64 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-
-import { Item } from '../../../../core/shared/item.model';
-import { fadeInOut } from '../../../animations/fade';
-import { SearchResult } from '../../../search/models/search-result.model';
-import { APP_CONFIG, AppConfig } from '../../../../../config/app-config.interface';
-import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
-import { Context } from '../../../../core/shared/context.model';
-import { WorkflowItem } from '../../../../core/submission/models/workflowitem.model';
 import {
-  DuplicateMatchMetadataDetailConfig
-} from '../../../../submission/sections/detect-duplicate/models/duplicate-detail-metadata.model';
+  AsyncPipe,
+  NgClass,
+  NgFor,
+  NgIf,
+} from '@angular/common';
+import {
+  Component,
+  Inject,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { Context } from 'src/app/core/shared/context.model';
+import { WorkflowItem } from 'src/app/core/submission/models/workflowitem.model';
+
+import {
+  APP_CONFIG,
+  AppConfig,
+} from '../../../../../config/app-config.interface';
 import { environment } from '../../../../../environments/environment';
+import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
+import { Item } from '../../../../core/shared/item.model';
+import { DuplicateMatchMetadataDetailConfig } from '../../../../submission/sections/detect-duplicate/models/duplicate-detail-metadata.model';
+import { ThemedThumbnailComponent } from '../../../../thumbnail/themed-thumbnail.component';
+import { fadeInOut } from '../../../animations/fade';
+import { MetadataLinkViewComponent } from '../../../metadata-link-view/metadata-link-view.component';
+import { ThemedBadgesComponent } from '../../../object-collection/shared/badges/themed-badges.component';
+import { ItemCollectionComponent } from '../../../object-collection/shared/mydspace-item-collection/item-collection.component';
+import { ItemCorrectionComponent } from '../../../object-collection/shared/mydspace-item-correction/item-correction.component';
+import { ItemSubmitterComponent } from '../../../object-collection/shared/mydspace-item-submitter/item-submitter.component';
+import { SearchResult } from '../../../search/models/search-result.model';
+import { TruncatableComponent } from '../../../truncatable/truncatable.component';
+import { TruncatablePartComponent } from '../../../truncatable/truncatable-part/truncatable-part.component';
+import { AdditionalMetadataComponent } from '../../search-result-list-element/additional-metadata/additional-metadata.component';
 
 /**
  * This component show metadata for the given item object in the list view.
  */
 @Component({
-  selector: 'ds-item-list-preview',
+  selector: 'ds-base-item-list-preview',
   styleUrls: ['item-list-preview.component.scss'],
   templateUrl: 'item-list-preview.component.html',
-  animations: [fadeInOut]
+  animations: [fadeInOut],
+  standalone: true,
+  imports: [
+    AsyncPipe,
+    ItemCollectionComponent,
+    ItemSubmitterComponent,
+    NgClass,
+    NgFor,
+    NgIf,
+    ThemedBadgesComponent,
+    ThemedThumbnailComponent,
+    TranslateModule,
+    TruncatableComponent,
+    TruncatablePartComponent,
+    MetadataLinkViewComponent,
+    AdditionalMetadataComponent,
+    ItemCorrectionComponent,
+  ],
 })
 export class ItemListPreviewComponent implements OnInit {
 
@@ -39,6 +78,16 @@ export class ItemListPreviewComponent implements OnInit {
   @Input() badgeContext: Context;
 
   /**
+   * Whether to show the badge label or not
+   */
+  @Input() showLabel: boolean;
+
+  /**
+   * Whether to show the metrics badges
+   */
+  @Input() showMetrics = true;
+
+  /**
    * A boolean representing if to show submitter information
    */
   @Input() showSubmitter = false;
@@ -46,7 +95,12 @@ export class ItemListPreviewComponent implements OnInit {
   /**
    * Whether to show the thumbnail preview
    */
-  @Input() showThumbnails;
+  @Input() showThumbnails: boolean;
+
+  /**
+   * Whether to show if the item is a correction
+   */
+  @Input() showCorrection = false;
 
   /**
    * An object representing the duplicate match
