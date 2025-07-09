@@ -15,6 +15,7 @@ import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { AuthService } from '../../../core/auth/auth.service';
+import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
 import { ProcessDataService } from '../../../core/data/processes/process-data.service';
 import { EPersonDataService } from '../../../core/eperson/eperson-data.service';
 import { EPerson } from '../../../core/eperson/models/eperson.model';
@@ -34,7 +35,7 @@ import { ProcessBulkDeleteService } from '../process-bulk-delete.service';
 import { ProcessOverviewService } from '../process-overview.service';
 import { ProcessOverviewTableComponent } from './process-overview-table.component';
 
-describe('ProcessOverviewTableComponent', () => {
+fdescribe('ProcessOverviewTableComponent', () => {
   let component: ProcessOverviewTableComponent;
   let fixture: ComponentFixture<ProcessOverviewTableComponent>;
 
@@ -46,6 +47,7 @@ describe('ProcessOverviewTableComponent', () => {
   let modalService: NgbModal;
   let authService; // : AuthService; Not typed as the mock does not fully implement AuthService
   let routeService: RouteService;
+  let authorizationService: AuthorizationDataService;
 
   let processes: Process[];
   let ePerson: EPerson;
@@ -135,12 +137,21 @@ describe('ProcessOverviewTableComponent', () => {
 
     authService = new AuthServiceMock();
     routeService = routeServiceStub;
+
+    authorizationService = jasmine.createSpyObj('authorizationService', {
+      isAuthorized: new BehaviorSubject(true),
+    });
   }
 
   beforeEach(waitForAsync(() => {
     init();
 
-    translateServiceSpy = jasmine.createSpyObj('TranslateService', ['get']);
+    translateServiceSpy = jasmine.createSpyObj('TranslateService', ['get'], {
+      onTranslationChange: new BehaviorSubject({}),
+      onLangChange: new BehaviorSubject({}),
+      onDefaultLangChange: new BehaviorSubject({}),
+    });
+    translateServiceSpy.get.and.returnValue(new BehaviorSubject('process.overview.unknown.user'));
 
     void TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), VarDirective, ProcessOverviewTableComponent],
@@ -153,6 +164,8 @@ describe('ProcessOverviewTableComponent', () => {
         { provide: NgbModal, useValue: modalService },
         { provide: AuthService, useValue: authService },
         { provide: RouteService, useValue: routeService },
+        { provide: AuthorizationDataService, useValue: authorizationService },
+        { provide: TranslateService, useValue: translateServiceSpy },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).overrideComponent(ProcessOverviewTableComponent, {
@@ -227,11 +240,13 @@ describe('ProcessOverviewTableComponent', () => {
   });
 
   describe('getEPersonName function', () => {
+    beforeEach(() => {
+      translateServiceSpy.get.calls.reset();
+    });
+
     it('should return unknown user when id is null', (done: DoneFn) => {
       const id = null;
       const expectedTranslation = 'process.overview.unknown.user';
-
-      translateServiceSpy.get(expectedTranslation);
 
       component.getEPersonName(id).subscribe((result: string) => {
         expect(result).toBe(expectedTranslation);
@@ -243,8 +258,6 @@ describe('ProcessOverviewTableComponent', () => {
     it('should return unknown user when id is invalid', (done: DoneFn) => {
       const id = '';
       const expectedTranslation = 'process.overview.unknown.user';
-
-      translateServiceSpy.get(expectedTranslation);
 
       component.getEPersonName(id).subscribe((result: string) => {
         expect(result).toBe(expectedTranslation);
