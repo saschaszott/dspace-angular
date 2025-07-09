@@ -39,9 +39,9 @@ import {
 import { PaginationService } from 'src/app/core/pagination/pagination.service';
 
 import { AuthService } from '../../../core/auth/auth.service';
+import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
 import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
 import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
-import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
 import { FindListOptions } from '../../../core/data/find-list-options.model';
 import { PaginatedList } from '../../../core/data/paginated-list.model';
 import { RemoteData } from '../../../core/data/remote-data';
@@ -228,8 +228,8 @@ export class ProcessOverviewTableComponent implements OnInit, OnDestroy {
               } else {
                 return this.processOverviewService.getOwnProcessesByProcessStatus(this.processStatus, findListOptions, autoRefreshInterval);
               }
-            })
-          )
+            }),
+          ),
         ),
         // Redirect the user when he is logged out
         redirectOn4xx(this.router, this.auth),
