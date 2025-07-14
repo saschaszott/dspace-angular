@@ -11,7 +11,10 @@ import {
   TranslateModule,
   TranslateService,
 } from '@ngx-translate/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {
+  BehaviorSubject,
+  of,
+} from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { AuthService } from '../../../core/auth/auth.service';
@@ -34,9 +37,6 @@ import { ProcessStatus } from '../../processes/process-status.model';
 import { ProcessBulkDeleteService } from '../process-bulk-delete.service';
 import { ProcessOverviewService } from '../process-overview.service';
 import { ProcessOverviewTableComponent } from './process-overview-table.component';
-import {FindListOptions} from "../../../core/data/find-list-options.model";
-import {RemoteData} from "../../../core/data/remote-data";
-import {PaginatedList} from "../../../core/data/paginated-list.model";
 
 describe('ProcessOverviewTableComponent', () => {
   let component: ProcessOverviewTableComponent;
