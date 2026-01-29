@@ -2,8 +2,8 @@ import {
   Pipe,
   PipeTransform,
 } from '@angular/core';
-import { filesize } from 'filesize';
-import { LocaleService } from "../../core/locale/locale.service";
+import { LocaleService } from '../../core/locale/locale.service';
+import { fileSize } from 'filesize';
 
 /*
  * Convert bytes into largest possible unit.
