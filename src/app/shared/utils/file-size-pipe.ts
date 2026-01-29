@@ -3,6 +3,7 @@ import {
   PipeTransform,
 } from '@angular/core';
 import { filesize } from 'filesize';
+import { LocaleService } from "../../core/locale/locale.service";
 
 /*
  * Convert bytes into largest possible unit.
@@ -18,7 +19,14 @@ import { filesize } from 'filesize';
   name: 'dsFileSize',
 })
 export class FileSizePipe implements PipeTransform {
+
+  constructor(private localeService: LocaleService) {}
+
   transform(bytes: number = 0, precision: number = 2): string {
-    return filesize(bytes, { standard: 'jedec', round: precision });
+    return fileSize(bytes, {
+      standard: 'jedec',
+      round: precision,
+      locale: this.localeService.getCurrentLanguageCode(),
+    });
   }
 }
