@@ -2,7 +2,7 @@ import {
   Pipe,
   PipeTransform,
 } from '@angular/core';
-import fileSize from 'filesize';
+import { filesize } from 'filesize';
 
 import { LocaleService } from '../../core/locale/locale.service';
 
@@ -24,7 +24,7 @@ export class FileSizePipe implements PipeTransform {
   constructor(private localeService: LocaleService) {}
 
   transform(bytes: number = 0, precision: number = 2): string {
-    return fileSize(bytes, {
+    return filesize(bytes, {
       standard: 'jedec',
       round: precision,
       locale: this.localeService.getCurrentLanguageCode(),
