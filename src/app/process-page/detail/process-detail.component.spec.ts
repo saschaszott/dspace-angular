@@ -61,6 +61,7 @@ describe('ProcessDetailComponent', () => {
   let router: RouterStub;
   let modalService;
   let notificationsService: NotificationsServiceStub;
+  let mockLocaleService;
 
   let process: Process;
   let fileName: string;
