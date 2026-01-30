@@ -9,8 +9,8 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { Metadata } from '@dspace/core/shared/metadata.utils';
 import { LocaleService } from '@dspace/core/locale/locale.service';
+import { Metadata } from '@dspace/core/shared/metadata.utils';
 import { createTestComponent } from '@dspace/core/testing/utils.test';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
