@@ -151,7 +151,7 @@ describe('ProcessDetailComponent', () => {
     });
 
     const languageList = ['en;q=1', 'de;q=0.8'];
-    const mockLocaleService = jasmine.createSpyObj('LocaleService', {
+    mockLocaleService = jasmine.createSpyObj('LocaleService', {
       getCurrentLanguageCode: jasmine.createSpy('getCurrentLanguageCode'),
       getLanguageCodeList: of(languageList),
     });
