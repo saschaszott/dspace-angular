@@ -61,7 +61,12 @@ describe('ProcessDetailComponent', () => {
   let router: RouterStub;
   let modalService;
   let notificationsService: NotificationsServiceStub;
-  let mockLocaleService;
+  let localeService: any;
+  const languageList = ['en;q=1', 'de;q=0.8'];
+  const mockLocaleService = jasmine.createSpyObj('LocaleService', {
+    getCurrentLanguageCode: jasmine.createSpy('getCurrentLanguageCode'),
+    getLanguageCodeList: of(languageList),
+  });
 
   let process: Process;
   let fileName: string;
@@ -149,12 +154,6 @@ describe('ProcessDetailComponent', () => {
     }, {
       process: createSuccessfulRemoteDataObject$(process),
     });
-
-    const languageList = ['en;q=1', 'de;q=0.8'];
-    mockLocaleService = jasmine.createSpyObj('LocaleService', {
-      getCurrentLanguageCode: jasmine.createSpy('getCurrentLanguageCode'),
-      getLanguageCodeList: of(languageList),
-    });
   }
 
   beforeEach(waitForAsync(() => {
@@ -195,7 +194,10 @@ describe('ProcessDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProcessDetailComponent);
     component = fixture.componentInstance;
+    localeService = TestBed.inject(LocaleService);
+    localeService.getCurrentLanguageCode.and.returnValue(of('en'));    
   });
+
   afterEach(fakeAsync(() => {
     TestBed.resetTestingModule();
     fixture.destroy();
