@@ -112,11 +112,11 @@ describe('FullFileSectionComponent', () => {
   }));
 
   beforeEach(waitForAsync(() => {
+    localeService = TestBed.inject(LocaleService);
+    localeService.getCurrentLanguageCode.and.returnValue(of('en'));    
     fixture = TestBed.createComponent(FullFileSectionComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
-    localeService = TestBed.inject(LocaleService);
-    localeService.getCurrentLanguageCode.and.returnValue(of('en'));
   }));
 
   describe('when the full file section gets loaded with bitstreams available', () => {
