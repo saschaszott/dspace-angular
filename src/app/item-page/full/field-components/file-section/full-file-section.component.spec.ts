@@ -113,7 +113,7 @@ describe('FullFileSectionComponent', () => {
 
   beforeEach(waitForAsync(() => {
     localeService = TestBed.inject(LocaleService);
-    localeService.getCurrentLanguageCode.and.returnValue(of('en'));    
+    localeService.getCurrentLanguageCode.and.returnValue(of('en'));
     fixture = TestBed.createComponent(FullFileSectionComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
