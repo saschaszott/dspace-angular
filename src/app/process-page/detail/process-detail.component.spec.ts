@@ -28,6 +28,7 @@ import { Process } from '@dspace/core/processes/process.model';
 import { Bitstream } from '@dspace/core/shared/bitstream.model';
 import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
 import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
+import { LocaleService } from '@dspace/core/locale/locale.service';
 import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
 import { RouterStub } from '@dspace/core/testing/router.stub';
 import { createPaginatedList } from '@dspace/core/testing/utils.test';
@@ -147,6 +148,12 @@ describe('ProcessDetailComponent', () => {
     }, {
       process: createSuccessfulRemoteDataObject$(process),
     });
+
+    const languageList = ['en;q=1', 'de;q=0.8'];
+    const mockLocaleService = jasmine.createSpyObj('LocaleService', {
+      getCurrentLanguageCode: jasmine.createSpy('getCurrentLanguageCode'),
+      getLanguageCodeList: of(languageList),
+    });
   }
 
   beforeEach(waitForAsync(() => {
@@ -169,6 +176,7 @@ describe('ProcessDetailComponent', () => {
         { provide: NgbModal, useValue: modalService },
         { provide: NotificationsService, useValue: notificationsService },
         { provide: Router, useValue: router },
+        { provide: LocaleService, useValue: mockLocaleService },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
