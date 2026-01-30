@@ -10,8 +10,10 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { Metadata } from '@dspace/core/shared/metadata.utils';
+import { LocaleService } from '@dspace/core/locale/locale.service';
 import { createTestComponent } from '@dspace/core/testing/utils.test';
 import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 import { FormComponent } from '../../../../../shared/form/form.component';
 import { TruncatePipe } from '../../../../../shared/utils/truncate.pipe';
@@ -24,6 +26,12 @@ describe('SubmissionSectionUploadFileViewComponent test suite', () => {
   let comp: SubmissionSectionUploadFileViewComponent;
   let compAsAny: any;
   let fixture: ComponentFixture<SubmissionSectionUploadFileViewComponent>;
+  let localeService: any;
+  const languageList = ['en;q=1', 'de;q=0.8'];
+  const mockLocaleService = jasmine.createSpyObj('LocaleService', {
+    getCurrentLanguageCode: jasmine.createSpy('getCurrentLanguageCode'),
+    getLanguageCodeList: of(languageList),
+  });
 
   const fileData: any = mockUploadFiles[0];
 
@@ -38,6 +46,7 @@ describe('SubmissionSectionUploadFileViewComponent test suite', () => {
       ],
       providers: [
         SubmissionSectionUploadFileViewComponent,
+        { provide: LocaleService, useValue: mockLocaleService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })
@@ -55,6 +64,8 @@ describe('SubmissionSectionUploadFileViewComponent test suite', () => {
   describe('', () => {
     let testComp: TestComponent;
     let testFixture: ComponentFixture<TestComponent>;
+    localeService = TestBed.inject(LocaleService);
+    localeService.getCurrentLanguageCode.and.returnValue(of('en'));
 
     // synchronous beforeEach
     beforeEach(() => {
@@ -81,6 +92,8 @@ describe('SubmissionSectionUploadFileViewComponent test suite', () => {
       fixture = TestBed.createComponent(SubmissionSectionUploadFileViewComponent);
       comp = fixture.componentInstance;
       compAsAny = comp;
+      localeService = TestBed.inject(LocaleService);
+      localeService.getCurrentLanguageCode.and.returnValue(of('en'));
     });
 
     afterEach(() => {
