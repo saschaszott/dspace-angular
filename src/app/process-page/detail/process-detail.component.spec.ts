@@ -195,7 +195,7 @@ describe('ProcessDetailComponent', () => {
     fixture = TestBed.createComponent(ProcessDetailComponent);
     component = fixture.componentInstance;
     localeService = TestBed.inject(LocaleService);
-    localeService.getCurrentLanguageCode.and.returnValue(of('en'));    
+    localeService.getCurrentLanguageCode.and.returnValue(of('en'));
   });
 
   afterEach(fakeAsync(() => {
