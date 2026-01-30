@@ -21,6 +21,8 @@ import { take } from 'rxjs/operators';
 })
 export class FileSizePipe implements PipeTransform {
 
+  private currentLocale: string;
+
   constructor(private localeService: LocaleService) {
     this.localeService.getCurrentLanguageCode().pipe(take(1)).subscribe(locale => {
       this.currentLocale = locale;
