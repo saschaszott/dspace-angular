@@ -26,9 +26,9 @@ import { ProcessDataService } from '@dspace/core/data/processes/process-data.ser
 import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
 import { Process } from '@dspace/core/processes/process.model';
 import { Bitstream } from '@dspace/core/shared/bitstream.model';
+import { LocaleService } from '@dspace/core/locale/locale.service';
 import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
 import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
-import { LocaleService } from '@dspace/core/locale/locale.service';
 import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
 import { RouterStub } from '@dspace/core/testing/router.stub';
 import { createPaginatedList } from '@dspace/core/testing/utils.test';
