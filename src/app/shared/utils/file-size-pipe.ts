@@ -31,7 +31,7 @@ export class FileSizePipe implements PipeTransform {
     return filesize(bytes, {
       standard: 'jedec',
       round: precision,
-      locale: this.currentLocale
+      locale: this.currentLocale,
     });
-  }  
+  }
 }
