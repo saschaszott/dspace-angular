@@ -111,11 +111,11 @@ describe('FileSectionComponent', () => {
   }));
 
   beforeEach(waitForAsync(() => {
+    localeService = TestBed.inject(LocaleService);
+    localeService.getCurrentLanguageCode.and.returnValue(of('en'));
     fixture = TestBed.createComponent(FileSectionComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
-    localeService = TestBed.inject(LocaleService);
-    localeService.getCurrentLanguageCode.and.returnValue(of('en'));
   }));
 
   it('should set the id of primary bitstream', () => {
