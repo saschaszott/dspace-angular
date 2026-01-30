@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { APP_CONFIG } from '@dspace/config/app-config.interface';
 import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
 import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
+import { LocaleService } from '@dspace/core/locale/locale.service';
 import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
 import { Bitstream } from '@dspace/core/shared/bitstream.model';
 import { PageInfo } from '@dspace/core/shared/page-info.model';
@@ -38,6 +39,12 @@ import { FileSectionComponent } from './file-section.component';
 describe('FileSectionComponent', () => {
   let comp: FileSectionComponent;
   let fixture: ComponentFixture<FileSectionComponent>;
+  let localeService: any;
+  const languageList = ['en;q=1', 'de;q=0.8'];
+  const mockLocaleService = jasmine.createSpyObj('LocaleService', {
+    getCurrentLanguageCode: jasmine.createSpy('getCurrentLanguageCode'),
+    getLanguageCodeList: of(languageList),
+  });
 
   const bitstreamDataService = jasmine.createSpyObj('bitstreamDataService', {
     findAllByItemAndBundleName: createSuccessfulRemoteDataObject$(createPaginatedList([])),
@@ -88,6 +95,7 @@ describe('FileSectionComponent', () => {
         { provide: APP_CONFIG, useValue: environment },
         { provide: ThemeService, useValue: getMockThemeService() },
         { provide: ActivatedRoute, useValue: new ActivatedRouteStub() },
+        { provide: LocaleService, useValue: mockLocaleService },
         provideMockStore(),
       ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -106,6 +114,8 @@ describe('FileSectionComponent', () => {
     fixture = TestBed.createComponent(FileSectionComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
+    localeService = TestBed.inject(LocaleService);
+    localeService.getCurrentLanguageCode.and.returnValue(of('en'));
   }));
 
   it('should set the id of primary bitstream', () => {
