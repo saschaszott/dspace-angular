@@ -88,13 +88,13 @@ describe('SubmissionSectionUploadFileViewComponent test suite', () => {
   });
 
   describe('', () => {
-    beforeEach(() => {
+    beforeEach(waitForAsync(async () => {
+      localeService = TestBed.inject(LocaleService);
+      localeService.getCurrentLanguageCode.and.returnValue(of('en'));
       fixture = TestBed.createComponent(SubmissionSectionUploadFileViewComponent);
       comp = fixture.componentInstance;
       compAsAny = comp;
-      localeService = TestBed.inject(LocaleService);
-      localeService.getCurrentLanguageCode.and.returnValue(of('en'));
-    });
+    }));
 
     afterEach(() => {
       fixture.destroy();
