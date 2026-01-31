@@ -64,17 +64,17 @@ describe('SubmissionSectionUploadFileViewComponent test suite', () => {
   describe('', () => {
     let testComp: TestComponent;
     let testFixture: ComponentFixture<TestComponent>;
-    localeService = TestBed.inject(LocaleService);
-    localeService.getCurrentLanguageCode.and.returnValue(of('en'));
 
     // synchronous beforeEach
-    beforeEach(() => {
+    beforeEach(waitForAsync(async () => {
+      localeService = TestBed.inject(LocaleService);
+      localeService.getCurrentLanguageCode.and.returnValue(of('en'));
       const html = `
       <ds-submission-section-upload-file-view [fileData]="fileData"></ds-submission-section-upload-file-view>`;
 
       testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
-    });
+    }));
 
     afterEach(() => {
       testFixture.destroy();
